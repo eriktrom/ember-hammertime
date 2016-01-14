@@ -3,5 +3,5 @@ import layout from '../templates/components/click-component';
 
 export default Ember.Component.extend({
   layout: layout,
-  click() {}
+  click() { console.log('Click was fired inside click-component'); }
 });

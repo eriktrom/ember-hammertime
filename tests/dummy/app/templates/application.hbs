@@ -1,7 +1,84 @@
 <h2 id="title">Welcome to Ember</h2>
 
-{{#link-to 'index' id="indexLink"}}Index Link{{/link-to}}
-{{click-component id="clickComponent"}}
-<a href="" id="nativeLink"></a>
+{{#link-to 'index' id="link-to"}}Index Link{{/link-to}}
+<a href="" id="native-link"></a>
+
+<div class="section">
+  <h2>Component with click</h2>
+  {{#click-component id="click-component"}}Howdy{{/click-component}}
+</div>
+
+<div class="section">
+  <h2>Component without any actions or handlers</h2>
+  {{#test-component id="default-component"}}Howdy{{/test-component}}
+</div>
+
+<div class="section">
+  <h2>Focusable Components (with no actions)</h2>
+  <div>{{test-component tagName="select" id="select-component"}}</div>
+  <div>{{#test-component tagName="button" id="button-component"}}Click Me!{{/test-component}}</div>
+  <div>{{test-component tagName="textarea" id="textarea-component"}}</div>
+  <div>{{test-component tagName="input" type="button" id="input-button-component" value="Click Me"}}</div>
+  <div>{{test-component tagName="input" type="submit" id="input-submit-component" value="Click Me"}}</div>
+  <div>{{test-component tagName="input" type="text" id="input-text-component"}}</div>
+  <div>{{test-component tagName="input" type="file" id="input-file-component" value="Select File"}}</div>
+</div>
+
+<div class="section">
+  <h2>Focusable Components (with on-click)</h2>
+  <div>{{test-click-component tagName="select" id="on-click-select-component" on-click=true}}</div>
+  <div>{{#test-click-component tagName="button" id="on-click-button-component" on-click=true}}Click Me!{{/test-click-component}}</div>
+  <div>{{test-click-component tagName="textarea" id="on-click-textarea-component" on-click=true}}</div>
+  <div>{{test-click-component tagName="input" type="button" id="on-click-input-button-component" on-click=true value="Click Me"}}</div>
+  <div>{{test-click-component tagName="input" type="submit" id="on-click-input-submit-component" on-click=true value="Click Me"}}</div>
+  <div>{{test-click-component tagName="input" type="text" id="on-click-input-text-component" on-click=true}}</div>
+  <div>{{test-click-component tagName="input" type="file" id="on-click-input-file-component" on-click=true value="Select File"}}</div>
+</div>
+
+
+<div class='section'>
+  <h2>Focusable Components (with on-mouseenter)</h2>
+  <div>{{test-mouse-enter-component tagName="select" id="on-mouseenter-select-component" on-mouseenter=true}}</div>
+  <div>{{#test-mouse-enter-component tagName="button" id="on-mouseenter-button-component" on-mouseenter=true}}Click Me{{/test-mouse-enter-component}}</div>
+  <div>{{test-mouse-enter-component tagName="textarea" id="on-mouseenter-textarea-component" on-mouseenter=true}}</div>
+  <div>{{test-mouse-enter-component tagName="input" type="button" id="on-mouseenter-input-button-component" on-mouseenter=true value="Click Me"}}</div>
+  <div>{{test-mouse-enter-component tagName="input" type="submit" id="on-mouseenter-input-submit-component" on-mouseenter=true value="Click Me"}}</div>
+  <div>{{test-mouse-enter-component tagName="input" type="text" id="on-mouseenter-input-text-component" on-mouseenter=true}}</div>
+  <div>{{test-mouse-enter-component tagName="input" type="file" id="on-mouseenter-input-file-component" on-mouseenter=true value="Select File"}}</div>
+</div>
+
+
+<div class="section">
+  <h2>Native Focusable Elements (no actions)</h2>
+  <div><select id="select-native"></select></div>
+  <div><button id="button-native">Click Me</button></div>
+  <div><textarea id="textarea-native"></textarea></div>
+  <div><input type="button" id="input-button-native" value="Click Me" /></div>
+  <div><input type="submit" id="input-submit-native" value="Click Me" /></div>
+  <div><input type="text" id="input-text-native" /></div>
+  <div><input type="file" id="input-file-native" value="Find File" /></div>
+</div>
+
+<div class="section">
+  <h2>Native Focusable Elements (click action)</h2>
+  <div><select id="on-click-select-native" {{action "foo" on="click"}}></select></div>
+  <div><button id="on-click-button-native" {{action "foo" on="click"}}>Click Me</button></div>
+  <div><textarea id="on-click-textarea-native" {{action "foo" on="click"}}></textarea></div>
+  <div><input type="button" id="on-click-input-button-native" {{action "foo" on="click"}} value="Click Me" /></div>
+  <div><input type="submit" id="on-click-input-submit-native" {{action "foo" on="click"}} value="Click Me" /></div>
+  <div><input type="text" id="on-click-input-text-native" {{action "foo" on="click"}} /></div>
+  <div><input type="file" id="on-click-input-file-native" {{action "foo" on="click"}} value="Click Me" /></div>
+</div>
+
+<div class="section">
+  <h2>Native Focusable Elements (mouseEnter action)</h2>
+  <div><select id="on-mouseenter-select-native" {{action "foo" on="mouseEnter"}}></select></div>
+  <div><button id="on-mouseenter-button-native" {{action "foo" on="mouseEnter"}}>Click Me</button></div>
+  <div><textarea id="on-mouseenter-textarea-native" {{action "foo" on="mouseEnter"}}></textarea></div>
+  <div><input type="button" id="on-mouseenter-input-button-native" {{action "foo" on="mouseEnter"}} value="Click Me" /></div>
+  <div><input type="submit" id="on-mouseenter-input-submit-native" {{action "foo" on="mouseEnter"}} value="Click Me" /></div>
+  <div><input type="text" id="on-mouseenter-input-text-native" {{action "foo" on="mouseEnter"}} /></div>
+  <div><input type="file" id="on-mouseenter-input-file-native" {{action "foo" on="mouseEnter"}} value="Find File" /></div>
+</div>
 
 {{outlet}}
