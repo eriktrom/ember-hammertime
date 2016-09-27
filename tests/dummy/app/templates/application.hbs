@@ -4,4 +4,13 @@
 {{click-component id="clickComponent"}}
 <a href="" id="nativeLink"></a>
 
+<hr>
+
+<div id="attr-binding-test-container">
+  <h2>Test for Multiple Attribute Bindins</h2>
+
+  {{#multiple-attribute-bindings-test id="attr-binding-clickable-card" title='Some text that will change when we click' }}
+    Oh Hai! A Clickable Area!
+  {{/multiple-attribute-bindings-test}}
+</div>
 {{outlet}}

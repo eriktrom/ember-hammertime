@@ -7,36 +7,38 @@ const {
 } = Ember;
 
 export default Mixin.create({
+
   init() {
     this._super(...arguments);
-    if (this.tagName) {
-      this.attributeBindings = ['touchActionStyle:style'];
-      this.applyStyle = true;
-    } else {
-      this.applyStyle = false;
+    const tagName = this.get('tagName');
+    const hasClick = !!this.get('click');
+    const hasTag = (typeof tagName === 'string' && tagName.length > 0) || (tagName === null && hasClick);
+    if (!hasTag) { return; }
+
+    this.reopen({
+      attributeBindings: ['touchActionStyle:style']
+    });
+
+    const isDefaultClickable = ['input', 'button', 'a', 'textarea'].indexOf(tagName) !== -1;
+    const isInputClickable = tagName === 'input' && ['button', 'submit', 'text', 'file'].indexOf(this.get('type')) !== -1;
+    if (hasClick || isDefaultClickable || isInputClickable) {
+      this.set('_isApplyTouchActionStyle', true);
     }
   },
 
-  touchActionStyle: computed(function() {
-    // we apply if click is present and tagName is present
-    let applyStyle = this.applyStyle && this.click;
+  touchActionStyle: computed({
+    get() {
+      const touchActionStyle = 'touch-action: manipulation; -ms-touch-action: manipulation; cursor: pointer;';
+      let originalStyle = this.get('style');
+      const _isApplyTouchActionStyle = this.get('_isApplyTouchActionStyle');
 
-    if (!applyStyle) {
-      // we apply if tagName
-      const tagName = this.get('tagName');
-      const type = this.get('type');
+      if (!_isApplyTouchActionStyle) { return originalStyle; }
 
-      let isFocusable = ['button', 'input', 'a', 'textarea'].indexOf(tagName) !== -1;
-
-      if (isFocusable) {
-        if (tagName === 'input') {
-          isFocusable = ['button', 'submit', 'text', 'file'].indexOf(type) !== -1;
-        }
+      if (!originalStyle || originalStyle.length === 0) {
+        return htmlSafe(touchActionStyle);
+      } else {
+        return htmlSafe(originalStyle += ` ${touchActionStyle}`);
       }
-
-      applyStyle = isFocusable;
     }
-
-    return htmlSafe(applyStyle ? 'touch-action: manipulation; -ms-touch-action: manipulation; cursor: pointer;' : '');
-  })
+  }),
 });
