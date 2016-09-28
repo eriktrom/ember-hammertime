@@ -1,42 +1,26 @@
 import Ember from 'ember';
 import layout from '../templates/components/multiple-attribute-bindings-test';
 
-// const {
-//   String: { htmlSafe },
-//   computed
-// } = Ember;
+const {
+  computed
+} = Ember;
 
 export default Ember.Component.extend({
   layout,
-  title: null,
-  isOdd: true,
 
-  // attributeBindings: ['colorStyle:style'],
-  // color: null,
-  // TODO - flesh out this test to
-  // colorStyle: computed({
-  //   get() {
-  //     let originalStyle = this.get('style');
-  //     const color = this.get('color');
+  attributeBindings: ['titleText:title'],
+  titleText: computed('isOdd', {
+    get() {
+      if (this.get('isOdd') === null) { return null; }
+      if (this.get('isOdd')) { return 'wow its odd today'; }
+      else { return 'now its odd im saying its even today'; }
+    }
+  }),
 
-  //     if (!color) { return originalStyle; }
-
-  //     if (!originalStyle || originalStyle.length === 0) {
-  //       return htmlSafe(`background: ${color}`);
-  //     } else {
-  //       return htmlSafe(originalStyle += ` background: ${color}`);
-  //     }
-  //   }
-  // }),
+  isOdd: null,
 
   click() {
-    this.toggleProperty('isOdd');
-
-    if (this.get('isOdd')) {
-      this.set('title', 'Odds win');
-      // this.set('color', 'blue'); // TODO - allow concatenating a background color
-    } else {
-      this.set('title', 'Evens Win');
-    }
-  }
+    if (this.get('odd') === null) { return true; }
+    return this.toggleProperty('isOdd');
+  },
 });

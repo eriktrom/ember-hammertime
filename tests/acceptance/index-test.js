@@ -22,31 +22,33 @@ test('visiting /index, ensures we hooked everything up appropriately', function(
   });
 });
 
-test('clicking the multi attribute bound box should properly prove title attribute is bound as well as touch action style attr', function(assert) {
+test('Components attributeBindings property properly concatenates after mixing in touch action mixin to prototype chain', function(assert) {
   const touchBox = () => find('#attr-binding-clickable-card');
   const touchBoxEl = () => touchBox().get(0);
-  const expectedTouchBoxStyle = () => touchBoxEl().getAttribute('style');
-  const assertTouchActionStyle = () => {
-    return assert.equal(expectedTouchBoxStyle(), styleString, `Actual Style: ${expectedTouchBoxStyle()}`);
-  }
+  const actualStyleAttr = () => touchBoxEl().getAttribute('style');
+  const actualTitleAttr = () => touchBoxEl().getAttribute('title');
 
   visit('/');
   andThen(function() {
-    assertTouchActionStyle();
+    assert.equal(actualStyleAttr(), styleString, `Touch action style IS initially set: ${actualStyleAttr()}`)
+    assert.equal(actualTitleAttr(), null, `No title is initially set: ${actualTitleAttr()}`)
     click(touchBoxEl());
   });
 
   andThen(function() {
-    touchBox().text().indexOf('Evens') > -1;
-    touchBox().text().indexOf('Odds') === -1;
-    assertTouchActionStyle();
+    assert.equal(actualTitleAttr(), 'wow its odd today', `Clicking/touching the box mutates the, dependent key for computing the bound title attr: ${actualTitleAttr()}`)
+    assert.equal(actualStyleAttr(), styleString, `Touch action style remains the same: ${actualStyleAttr()}`)
     click(touchBoxEl());
   });
 
   andThen(function() {
-    touchBox().text().indexOf('Odds') > -1;
-    touchBox().text().indexOf('Odds') === -1;
-    assertTouchActionStyle();
+    assert.equal(actualTitleAttr(), 'now its odd im saying its even today', `Continuing to touch/click the box toggles the value of the bound title attribute: ${actualTitleAttr()}`)
+    assert.equal(actualStyleAttr(), styleString, `Touch action style remains the same: ${actualStyleAttr()}`)
   });
-
 });
+
+// TODO: this works when correctly setting up bound computed property in users app
+// and can easily be abstracted to allow the same but in less cumbersome way
+//
+// test case: toggle the background color blue when tapping a box setup with touch-action: manipulation
+// test('Style property originally bound to touchActionStyle computed property in its mixin can be extended by downstream components');
