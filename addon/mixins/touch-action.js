@@ -3,7 +3,6 @@ import Ember from "ember";
 const {
   computed,
   defineProperty,
-  K,
   get,
   Mixin,
   String: {htmlSafe, isHTMLSafe}
@@ -37,7 +36,7 @@ export default Mixin.create({
   ignoreTouchAction: false,
 
   init() {
-    this._super();
+    this._super(...arguments);
 
     const {
       tagName,
@@ -45,7 +44,7 @@ export default Mixin.create({
       click
     } = this;
 
-    const hasClick = click !== K;
+    const hasClick = typeof click === 'function';
     const hasTag = (typeof tagName === 'string' && tagName.length > 0) || (tagName === null && hasClick);
     if (!hasTag) { return; }
 
