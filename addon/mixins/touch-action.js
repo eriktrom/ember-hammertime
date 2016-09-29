@@ -36,7 +36,7 @@ export default Mixin.create({
   ignoreTouchAction: false,
 
   init() {
-    this._super(...arguments);
+    this._super();
 
     const {
       tagName,
