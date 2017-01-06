@@ -10,7 +10,7 @@ const {
 
 const FocusableInputTypes = ['button', 'submit', 'text', 'file'];
 const TouchActionSelectors = ['button', 'input', 'a', 'textarea'];
-const TouchActionProperties = 'touch-action: manipulation; -ms-touch-action: manipulation; cursor: pointer;';
+const TouchActionProperties = 'manipulation';
 
 function touchActionStyle() {
   let style = get(this, 'touchActionProperties');
@@ -69,12 +69,12 @@ export default Mixin.create({
       // don't override other style bindings if present
       if (Array.isArray(bindings)) {
         bindings.forEach((binding) => {
-          if (binding === 'style') {
+          if (binding === 'touch-action') {
             this.otherStyleKey = binding;
           } else {
             let end = binding.length - 6;
 
-            if (end > 0 && ':style' === binding.substring(end)) {
+            if (end > 0 && ':touch-action' === binding.substring(end)) {
               this.otherStyleKey = binding.substring(0, end);
             }
           }
@@ -82,7 +82,7 @@ export default Mixin.create({
         newAttributeBindings = newAttributeBindings.concat(bindings);
       }
 
-      newAttributeBindings.push('touchActionStyle:style');
+      newAttributeBindings.push('touchActionStyle:touch-action');
       this.set('attributeBindings', newAttributeBindings);
 
       let desc = this.otherStyleKey ? computed(this.otherStyleKey, touchActionStyle) : computed(touchActionStyle);

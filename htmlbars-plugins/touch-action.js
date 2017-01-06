@@ -15,7 +15,7 @@
 
 function TouchActionSupport(config) {
   var touchActionSelectors = ['button', 'input', 'a', 'textarea'];
-  var touchActionProperties = 'touch-action: manipulation; -ms-touch-action: manipulation; cursor: pointer;';
+  var touchActionProperties = 'manipulation';
   config = config || {};
 
   this.touchActionSelectors = config.touchActionSelectors || touchActionSelectors;
@@ -29,16 +29,16 @@ TouchActionSupport.prototype.transform = function TouchActionSupport_transform(a
 
   walker.visit(ast, function(node) {
     if (pluginContext.validate(node)) {
-      var style = elementAttribute(node, 'style');
-      if (!style) {
-        style = {
+      var touchActionAttr = elementAttribute(node, 'touch-action');
+      if (!touchActionAttr) {
+        touchActionAttr = {
           type: 'AttrNode',
-          name: 'style',
+          name: 'touch-action',
           value: { type: 'TextNode', chars: '' }
         };
-        node.attributes.push(style);
+        node.attributes.push(touchActionAttr);
       }
-      style.value.chars += pluginContext.touchActionProperties;
+      touchActionAttr.value.chars += pluginContext.touchActionProperties;
     }
   });
 
