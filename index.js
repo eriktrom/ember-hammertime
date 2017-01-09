@@ -16,10 +16,6 @@ module.exports = {
       throw new Error('Ember-Hammertime is being used within another addon or engine ' +
         'and is having trouble registering itself to the parent application.');
     }
-
-    if (!process.env.EMBER_CLI_FASTBOOT) {
-      app.import(app.bowerDirectory + '/hammer-time/hammer-time.js');
-    }
   },
 
   isDevelopingAddon: function() {
