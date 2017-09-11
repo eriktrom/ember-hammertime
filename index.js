@@ -27,17 +27,17 @@ module.exports = {
   },
 
   setupPreprocessorRegistry(type, registry) {
-    var TouchAction = require('./htmlbars-plugins/touch-action');
-    var config = this.projectConfig()['EmberHammertime'];
+    let { TouchActionSupport, setConfigValues } = require('./htmlbars-plugins/touch-action');
+    let config = this.projectConfig()['EmberHammertime'];
+    setConfigValues(config);
 
     registry.add('htmlbars-ast-plugin', {
-      name: "touch-action",
-      plugin: TouchAction.getBoundPlugin(config),
+      name: 'touch-action',
+      plugin: TouchActionSupport,
       baseDir() {
         return __dirname;
       }
     });
-
   }
 
 };
