@@ -13,15 +13,12 @@
  ```
  */
 
-function TouchActionSupport(config) {
-  var touchActionSelectors = ['button', 'input', 'a', 'textarea'];
-  var touchActionProperties = 'manipulation';
-  config = config || {};
+ let touchActionSelectors = ['button', 'input', 'a', 'textarea'];
+ let touchActionProperties = 'manipulation';
 
-  this.touchActionSelectors = config.touchActionSelectors || touchActionSelectors;
-  this.touchActionProperties = config.touchActionProperties || touchActionProperties;
-  this.syntax = null;
-}
+ function TouchActionSupport() {
+   this.syntax = null;
+ }
 
 TouchActionSupport.prototype.transform = function TouchActionSupport_transform(ast) {
   var pluginContext = this;
@@ -118,9 +115,11 @@ function sexpr(node) {
   }
 }
 
-module.exports = {
-  TouchActionSupport,
-  getBoundPlugin: function(config) {
-    return TouchActionSupport.bind(TouchActionSupport, config);
-  }
-};
+function setConfigValues(config) {
+  config = config || {};
+
+  touchActionSelectors = config.touchActionSelectors || touchActionSelectors;
+  touchActionProperties = config.touchActionProperties || touchActionProperties;
+}
+
+module.exports = { TouchActionSupport, setConfigValues };
